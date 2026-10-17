@@ -1,12 +1,12 @@
 package com.example.commercecartapi.service;
 
-import com.example.commercecartapi.entity.Cart;
-import com.example.commercecartapi.entity.CartItem;
-import com.example.commercecartapi.entity.Order;
-import com.example.commercecartapi.entity.OrderItem;
+import com.example.commercecartapi.entity.*;
 import com.example.commercecartapi.enums.OrderStatus;
 import com.example.commercecartapi.exception.EmptyCartException;
+import com.example.commercecartapi.exception.InsufficientStockException;
 import com.example.commercecartapi.repository.OrderRepository;
+import com.example.commercecartapi.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,9 @@ import java.util.Objects;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final CartService cartService;
+    private final ProductRepository productRepository;
 
+    @Transactional
     public Order createOrder(String deliveryAddress) {
         Cart currentCart = cartService.getActiveCart();
         List<CartItem> cartItems = currentCart.getCartItems();
@@ -34,6 +36,13 @@ public class OrderService {
                     .build();
 
             for (CartItem cartItem : cartItems) {
+                Product product = cartItem.getProduct();
+                int requestedQuantity = cartItem.getQuantity();
+
+                if (product.getStockQuantity() < requestedQuantity) {
+                    throw new InsufficientStockException(product.getName() + " is out of stock! Remaining: " + product.getStockQuantity());
+                }
+
                 OrderItem orderItem = OrderItem.builder()
                         .order(newOrder)
                         .product(cartItem.getProduct())
@@ -42,6 +51,12 @@ public class OrderService {
                         .build();
 
                 newOrder.getOrderItems().add(orderItem);
+
+                product.setStockQuantity(product.getStockQuantity() - cartItem.getQuantity());
+                if(product.getStockQuantity() == 0) {
+                    product.changeStatusToOutOfStock();
+                }
+                productRepository.save(product);
             }
 
             Order savedOrder = orderRepository.save(newOrder);

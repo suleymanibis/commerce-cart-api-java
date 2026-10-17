@@ -25,6 +25,8 @@ public class Product {
     private String name;
     private String description;
     private BigDecimal price; // We use big decimal because price is a money variable
+    @Setter
+    private int stockQuantity;
 
     @Enumerated(EnumType.STRING) // I used annotation @Enumerated(EnumType.String) because I want to sort it as a string in db.
     private ProductStatus status;
@@ -35,12 +37,12 @@ public class Product {
     @LastModifiedDate
     private Instant updatedAt;
 
-    public Product(String name, String description, BigDecimal price){
+    public Product(String name, String description, BigDecimal price, int stockQuantity){
         this.name = name;
         this.description = description;
         this.price = price;
+        this.stockQuantity = stockQuantity;
         this.status = ProductStatus.ACTIVE;
-        this.createdAt = Instant.from(LocalDateTime.now());
     }
 
     public void changeStatusToDeleted(){

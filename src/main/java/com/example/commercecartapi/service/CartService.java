@@ -5,6 +5,7 @@ import com.example.commercecartapi.entity.CartItem;
 import com.example.commercecartapi.entity.Product;
 import com.example.commercecartapi.entity.User;
 import com.example.commercecartapi.enums.ProductStatus;
+import com.example.commercecartapi.exception.InsufficientStockException;
 import com.example.commercecartapi.exception.NotActiveProductException;
 import com.example.commercecartapi.exception.ResourceNotFoundException;
 import com.example.commercecartapi.repository.CartItemRepository;
@@ -55,14 +56,23 @@ public class CartService {
                     .orElse(null);
 
             if(cartItem == null){
-                CartItem newCartItem = new CartItem(
-                        currentCart, product, quantity
-                );
+                if(quantity <= product.getStockQuantity()) {
+                    CartItem newCartItem = new CartItem(
+                            currentCart, product, quantity
+                    );
 
-                currentCart.getCartItems().add(newCartItem);
+                    currentCart.getCartItems().add(newCartItem);
+                } else {
+                    throw new InsufficientStockException("Not enough stock quantity!");
+                }
 
             } else {
-                cartItem.addQuantity(quantity);
+
+                if(cartItem.getQuantity() + quantity <= product.getStockQuantity()) {
+                    cartItem.addQuantity(quantity);
+                } else {
+                    throw new InsufficientStockException("Not enough stock quantity!");
+                }
             }
 
             return cartRepository.save(currentCart);

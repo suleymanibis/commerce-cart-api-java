@@ -104,4 +104,19 @@ public class GlobalExceptionHandler {
         log.error("Error: ", ex);
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(apiErrorResponse);
     }
+
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<ApiErrorResponse> handleInsufficientStockException(InsufficientStockException ex, HttpServletRequest request){
+        String message = "Not enough stock quantity!";
+        String path = request.getRequestURI();
+
+        ApiErrorResponse  apiErrorResponse = new ApiErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                message,
+                path
+        );
+        log.error("Error: ", ex);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiErrorResponse);
+    }
 }
