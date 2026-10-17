@@ -67,11 +67,26 @@ public class GlobalExceptionHandler {
 
         ApiErrorResponse  apiErrorResponse = new ApiErrorResponse(
                 LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.CONFLICT.value(),
                 message,
                 path
         );
         log.error("Error: ", ex);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(apiErrorResponse);
+    }
+
+    @ExceptionHandler(NotActiveProductException.class)
+    public ResponseEntity<ApiErrorResponse> handleNotActiveProductException(NotActiveProductException ex, HttpServletRequest request){
+        String message = "Product status is not active!";
+        String path = request.getRequestURI();
+
+        ApiErrorResponse  apiErrorResponse = new ApiErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                message,
+                path
+        );
+        log.error("Error: ", ex);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiErrorResponse);
     }
 }

@@ -13,7 +13,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Builder
 @NoArgsConstructor
