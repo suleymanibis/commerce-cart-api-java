@@ -3,15 +3,16 @@ package com.example.commercecartapi;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.mockito.Mockito.*;
 
 import com.example.commercecartapi.exception.ResourceNotFoundException;
-import org.springframework.http.MediaType;
-
 import com.example.commercecartapi.controller.ProductController;
 import com.example.commercecartapi.dto.ProductCreateRequest;
 import com.example.commercecartapi.dto.ProductResponse;
 import com.example.commercecartapi.enums.ProductStatus;
 import com.example.commercecartapi.service.ProductService;
+
+import org.springframework.http.MediaType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -21,8 +22,6 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.math.BigDecimal;
 import java.util.List;
-
-import static org.mockito.Mockito.*;
 
 @WebMvcTest(ProductController.class)
 public class ProductControllerTest {

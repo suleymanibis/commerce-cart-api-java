@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -39,6 +40,7 @@ public class Product {
         this.description = description;
         this.price = price;
         this.status = ProductStatus.ACTIVE;
+        this.createdAt = Instant.from(LocalDateTime.now());
     }
 
     public void changeStatusToDeleted(){

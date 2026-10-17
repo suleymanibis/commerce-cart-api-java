@@ -59,4 +59,19 @@ public class GlobalExceptionHandler {
         log.error("Error: ", ex);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiErrorResponse);
     }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ApiErrorResponse> handleUserExistsException(UserAlreadyExistsException ex, HttpServletRequest request){
+        String message = "User is already exists.";
+        String path = request.getRequestURI();
+
+        ApiErrorResponse  apiErrorResponse = new ApiErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                message,
+                path
+        );
+        log.error("Error: ", ex);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(apiErrorResponse);
+    }
 }
