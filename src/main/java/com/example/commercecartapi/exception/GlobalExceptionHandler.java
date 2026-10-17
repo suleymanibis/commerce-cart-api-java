@@ -89,4 +89,19 @@ public class GlobalExceptionHandler {
         log.error("Error: ", ex);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiErrorResponse);
     }
+
+    @ExceptionHandler(EmptyCartException.class)
+    public ResponseEntity<ApiErrorResponse> handleEmptyCartException(EmptyCartException ex, HttpServletRequest request){
+        String message = "Cart is empty!";
+        String path = request.getRequestURI();
+
+        ApiErrorResponse  apiErrorResponse = new ApiErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_ACCEPTABLE.value(),
+                message,
+                path
+        );
+        log.error("Error: ", ex);
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(apiErrorResponse);
+    }
 }
