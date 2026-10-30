@@ -3,7 +3,6 @@ package com.example.commercecartapi.controller;
 import com.example.commercecartapi.dto.CreateOrderRequest;
 import com.example.commercecartapi.dto.OrderResponse;
 import com.example.commercecartapi.entity.Order;
-import com.example.commercecartapi.entity.OrderItem;
 import com.example.commercecartapi.mapper.OrderMapper;
 import com.example.commercecartapi.service.OrderService;
 import jakarta.validation.Valid;

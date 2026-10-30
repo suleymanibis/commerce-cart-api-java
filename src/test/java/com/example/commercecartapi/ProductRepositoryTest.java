@@ -23,19 +23,22 @@ public class ProductRepositoryTest {
         Product newProduct = new Product(
                 "laptop",
                 "you can develop projects",
-                new BigDecimal("44999.95"));
+                new BigDecimal("44999.95"),
+                10);
         newProduct.changeStatusToDeleted();
 
         Product newProduct2 = new Product(
                 "laptop 2",
                 "you can develop projects",
-                new BigDecimal("41999.95"));
+                new BigDecimal("41999.95"),
+                10);
         newProduct2.changeStatusToActive();
 
         Product newProduct3 = new Product(
                 "laptop 3",
                 "you can develop projects",
-                new BigDecimal("34999.95"));
+                new BigDecimal("34999.95"),
+                10);
         newProduct3.changeStatusToOutOfStock();
 
         productRepository.saveAll(List.of(newProduct, newProduct2, newProduct3));

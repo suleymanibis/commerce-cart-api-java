@@ -51,12 +51,12 @@ public class ProductServiceTest {
         Product mockProduct = new Product(
                 "Laptop",
                 "You can develop projects",
-                new BigDecimal("45990.85"));
+                new BigDecimal("45990.85"),10);
 
         Product mockSavedProduct = new Product(
                 "Laptop",
                 "You can develop projects",
-                new BigDecimal("45990.85"));
+                new BigDecimal("45990.85"),10);
         mockSavedProduct.changeStatusToActive();
         ReflectionTestUtils.setField(mockSavedProduct, "id", 1L);
 
@@ -138,7 +138,7 @@ public class ProductServiceTest {
         Product mockExistingProduct = new Product(
                 "Laptop",
                 "You can develop projects",
-                new BigDecimal("45990.85"));
+                new BigDecimal("45990.85"),10);
         mockExistingProduct.changeStatusToActive();
 
         ReflectionTestUtils.setField(mockExistingProduct, "id", productId);
@@ -146,7 +146,7 @@ public class ProductServiceTest {
         Product mockSavedProduct = new Product(
                 "Laptop",
                 "You can develop projects",
-                new BigDecimal("45990.85"));
+                new BigDecimal("45990.85"),10);
         mockSavedProduct.changeStatusToDeleted();
 
         ReflectionTestUtils.setField(mockSavedProduct, "id", productId);
@@ -192,7 +192,7 @@ public class ProductServiceTest {
         Product mockProduct = new Product(
                 "Laptop",
                 "You can develop projects",
-                new BigDecimal("45990.85"));
+                new BigDecimal("45990.85"),10);
 
         mockProduct.changeStatusToActive();
         ReflectionTestUtils.setField(mockProduct, "id", 1L);
@@ -200,7 +200,7 @@ public class ProductServiceTest {
         Product mockProduct2 = new Product(
                 "Laptop 2",
                 "You can develop projects",
-                new BigDecimal("45990.85"));
+                new BigDecimal("45990.85"),10);
 
         mockProduct2.changeStatusToOutOfStock();
         ReflectionTestUtils.setField(mockProduct2, "id", 2L);

@@ -8,7 +8,6 @@ import com.example.commercecartapi.enums.ProductStatus;
 import com.example.commercecartapi.exception.InsufficientStockException;
 import com.example.commercecartapi.exception.NotActiveProductException;
 import com.example.commercecartapi.exception.ResourceNotFoundException;
-import com.example.commercecartapi.repository.CartItemRepository;
 import com.example.commercecartapi.repository.CartRepository;
 import com.example.commercecartapi.repository.ProductRepository;
 import com.example.commercecartapi.repository.UserRepository;
@@ -26,7 +25,6 @@ import java.util.Objects;
 public class CartService {
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
-    private final CartItemRepository cartItemRepository;
     private final ProductRepository productRepository;
 
     public Cart getActiveCart() {

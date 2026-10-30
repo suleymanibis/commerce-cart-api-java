@@ -15,4 +15,5 @@ public class ProductCreateRequest {
     private String description;
     @Positive
     private BigDecimal price;
+    private int stockQuantity;
 }

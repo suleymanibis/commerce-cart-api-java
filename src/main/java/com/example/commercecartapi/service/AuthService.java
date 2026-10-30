@@ -12,6 +12,8 @@ import com.example.commercecartapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,14 @@ public class AuthService {
         } else {
             throw new UserAlreadyExistsException("User with " + request.getEmail() + " is already exists!");
         }
+    }
+
+    public UserResponse getUser(){
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User with " + email + " cannot found!"));
+
+        return userMapper.toResponse(user);
     }
 
     public AuthResponse login(LoginRequest loginRequest){

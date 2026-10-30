@@ -13,5 +13,6 @@ public class ProductResponse {
     private String name;
     private String description;
     private BigDecimal price;
+    private int stockQuantity;
     private ProductStatus status;
 }
